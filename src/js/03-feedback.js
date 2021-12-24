@@ -11,10 +11,6 @@ let objForm = {};
 
 function onInput(e) {
   objForm[e.target.name] = e.target.value;
-  onJsonForm(objForm);
-}
-
-function onJsonForm(obj) {
   localStorage.setItem(LOCAL_KEY, JSON.stringify(obj));
 }
 
