@@ -49,8 +49,7 @@ function formSubmit(e) {
 }
 
 function transformationJSON() {
-  const submitFormJSON = localStorage.getItem(LOCAL_KEY);
-  const formJSON = JSON.parse(submitFormJSON);
+  const formJSON = JSON.parse(localStorage.getItem(LOCAL_KEY));
 
   if (!formJSON) return;
 
