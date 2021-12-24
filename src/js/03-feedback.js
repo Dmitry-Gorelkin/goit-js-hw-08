@@ -6,9 +6,10 @@ const refs = {
   message: document.querySelector('.feedback-form textarea'),
 };
 
+const LOCAL_KEY = 'feedback-form-state';
 const objForm = {};
 
-if (localStorage.getItem('feedback-form-state')) {
+if (localStorage.getItem(LOCAL_KEY)) {
   transformationJSON();
 
   refs.email.value = objForm.email ? objForm.email : '';
@@ -26,7 +27,7 @@ function onMessageInput(e) {
 }
 
 function onJsonForm(obj) {
-  localStorage.setItem('feedback-form-state', JSON.stringify(obj));
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(obj));
 }
 
 function formSubmit(e) {
@@ -42,13 +43,13 @@ function formSubmit(e) {
   console.log(objForm);
 
   e.target.reset();
-  localStorage.removeItem('feedback-form-state');
+  localStorage.removeItem(LOCAL_KEY);
   objForm.email = '';
   objForm.message = '';
 }
 
 function transformationJSON() {
-  const submitFormJSON = localStorage.getItem('feedback-form-state');
+  const submitFormJSON = localStorage.getItem(LOCAL_KEY);
   const formJSON = JSON.parse(submitFormJSON);
 
   if (!formJSON) return;
