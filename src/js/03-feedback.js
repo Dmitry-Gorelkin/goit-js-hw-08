@@ -1,28 +1,23 @@
-import throttle from 'lodash.throttle';
+import throttle from "lodash.throttle";
 
 const refs = {
-  form: document.querySelector('.feedback-form'),
-  email: document.querySelector('.feedback-form input'),
-  message: document.querySelector('.feedback-form textarea'),
+  form: document.querySelector(".feedback-form"),
+  email: document.querySelector(".feedback-form input"),
+  message: document.querySelector(".feedback-form textarea"),
 };
 
-const LOCAL_KEY = 'feedback-form-state';
-const objForm = {};
+const LOCAL_KEY = "feedback-form-state";
+let objForm = {};
 
 if (localStorage.getItem(LOCAL_KEY)) {
   transformationJSON();
 
-  refs.email.value = objForm.email ? objForm.email : '';
-  refs.message.value = objForm.message ? objForm.message : '';
+  refs.email.value = objForm.email ? objForm.email : "";
+  refs.message.value = objForm.message ? objForm.message : "";
 }
 
-function onMailInput(e) {
-  objForm.email = e.target.value;
-  onJsonForm(objForm);
-}
-
-function onMessageInput(e) {
-  objForm.message = e.target.value;
+function onInput(e) {
+  objForm[e.target.name] = e.target.value;
   onJsonForm(objForm);
 }
 
@@ -36,7 +31,7 @@ function formSubmit(e) {
   transformationJSON();
 
   if (!objForm.email || !objForm.message) {
-    alert('Вы не заполнили форму.');
+    alert("Вы не заполнили форму.");
     return;
   }
 
@@ -44,19 +39,14 @@ function formSubmit(e) {
 
   e.target.reset();
   localStorage.removeItem(LOCAL_KEY);
-  objForm.email = '';
-  objForm.message = '';
+  objForm = {};
 }
 
 function transformationJSON() {
-  const formJSON = JSON.parse(localStorage.getItem(LOCAL_KEY));
+  if (!JSON.parse(localStorage.getItem(LOCAL_KEY))) return;
 
-  if (!formJSON) return;
-
-  objForm.email = formJSON.email;
-  objForm.message = formJSON.message;
+  objForm = JSON.parse(localStorage.getItem(LOCAL_KEY));
 }
 
-refs.email.addEventListener('input', throttle(onMailInput, 500));
-refs.message.addEventListener('input', throttle(onMessageInput, 500));
-refs.form.addEventListener('submit', formSubmit);
+refs.form.addEventListener("input", throttle(onInput, 500));
+refs.form.addEventListener("submit", formSubmit);
