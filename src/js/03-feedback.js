@@ -51,6 +51,8 @@ function transformationJSON() {
   const submitFormJSON = localStorage.getItem('feedback-form-state');
   const formJSON = JSON.parse(submitFormJSON);
 
+  if (!formJSON) return;
+
   objForm.email = formJSON.email;
   objForm.message = formJSON.message;
 }
