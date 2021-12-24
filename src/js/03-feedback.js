@@ -19,7 +19,7 @@ function formSubmit(e) {
 
   transformationJSON();
 
-  if (!objForm.email || !objForm.message || !objForm.message.replace(' ')) {
+  if (!objForm.email || !objForm.message || !objForm.message.replaceAll(' ', '')) {
     alert('Вы не заполнили форму.');
     return;
   }
